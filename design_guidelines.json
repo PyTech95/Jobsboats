@@ -1,0 +1,137 @@
+{
+  "project_name": "Jobsboats",
+  "archetype_selected": {
+    "id": 4,
+    "name": "Swiss & High-Contrast (Marine Customization)",
+    "reasoning": "A highly functional hybrid application (marketing + dashboards). Combining the precision and authority of Swiss High-Contrast with the nautical branding requirements (Deep Navy and bright Coral/Cyan accents) to project trust, speed, and navigation."
+  },
+  "theme": {
+    "mode": "light",
+    "notes": "Marketing pages should feature dark, immersive hero sections (Deep Navy) transitioning into bright, highly legible light-themed (Slate 50) sections. Both Employer and Job Seeker dashboards MUST be primarily light-themed for data legibility.",
+    "colors": {
+      "primary": "#0B1528",
+      "primary_foreground": "#FFFFFF",
+      "secondary": "#00B4D8",
+      "secondary_foreground": "#FFFFFF",
+      "accent": "#FF5959",
+      "accent_foreground": "#FFFFFF",
+      "background": "#F8FAFC",
+      "surface": "#FFFFFF",
+      "muted": "#F1F5F9",
+      "border": "#E2E8F0",
+      "text_primary": "#0B1528",
+      "text_secondary": "#64748B",
+      "gradients": {
+        "ocean_brand": "bg-gradient-to-r from-[#0B1528] to-[#0077B6]",
+        "cyan_flare": "bg-gradient-to-br from-[#00B4D8] to-[#0077B6]"
+      },
+      "forbidden_colors": [
+        "#1B93A4",
+        "#7351B7",
+        "#000000"
+      ]
+    },
+    "typography": {
+      "fonts": {
+        "heading": "Cabinet Grotesk",
+        "body": "Manrope",
+        "mono": "JetBrains Mono"
+      },
+      "rules": {
+        "h1": "text-5xl lg:text-6xl font-black tracking-tighter leading-none text-slate-900",
+        "h2": "text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight",
+        "h3": "text-xl lg:text-2xl font-bold tracking-tight",
+        "h4": "text-lg font-bold",
+        "body": "text-base font-medium leading-relaxed",
+        "overline": "text-xs font-bold uppercase tracking-[0.2em] text-secondary",
+        "forbidden_fonts": [
+          "Inter",
+          "Roboto",
+          "Space Grotesk",
+          "Open Sans"
+        ]
+      }
+    },
+    "spacing_and_layout": {
+      "philosophy": "Generous Spacing Philosophy. Use 2-3x more spacing. Containers with borders MUST have p-6 or p-8.",
+      "marketing_grid": "MODE A: TETRIS GRID. Asymmetry and visual tension. Base: grid-cols-1 md:grid-cols-12 gap-8.",
+      "dashboard_grid": "MODE B: CONTROL ROOM. Dense and scanable. Base: grid-cols-1 md:grid-cols-4 gap-6. Flat rectangular cards without generic drop shadows. Utilize 1px solid borders for separation.",
+      "radius": "rounded-none or rounded-md (max 8px) to maintain the sharp Swiss-modern aesthetic.",
+      "shadows": {
+        "ambient": "shadow-[0_8px_32px_rgba(11,21,40,0.06)]",
+        "hover_lift": "shadow-lg shadow-blue-900/10"
+      }
+    }
+  },
+  "media_assets": {
+    "hero_background": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/747c2510-38b2-444a-8916-6fc89b153445/images/2832d4a52e73501819e6429aebba6a5912efaffe65c607a20a9b15e204756525.png",
+      "description": "Abstract 3D topographical map ocean waves, deep navy blue and bright cyan colors",
+      "usage": "Marketing Home Hero background behind 'bg-black/40' overlay."
+    },
+    "nautical_icons": {
+      "compass": "https://static.prod-images.emergentagent.com/jobs/747c2510-38b2-444a-8916-6fc89b153445/images/07d7041ecd886fbc87934c4c059ad487a10584938bbd6473604c7fc3963ff158.png",
+      "lifebuoy": "https://static.prod-images.emergentagent.com/jobs/747c2510-38b2-444a-8916-6fc89b153445/images/489314fa868600deceeca60be1dd8f8ed778d3031b77929488c4310ec950a8c5.png",
+      "usage": "Use in 'Services' and 'How it Works' section as premium 3D illustrations."
+    },
+    "lifestyle_photography": [
+      {
+        "url": "https://images.unsplash.com/photo-1509295433237-4b4851f2ab67?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTJ8MHwxfHNlYXJjaHwxfHxvY2VhbiUyMHNhaWxpbmclMjB5YWNodCUyMGFlcmlhbHxlbnwwfHx8fDE3NzkxMTQxOTR8MA&ixlib=rb-4.1.0&q=85",
+        "usage": "About Page hero or For Employers banner background."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NDh8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b3JraW5nJTIwbGFwdG9wfGVufDB8fHx8MTc3OTExNDE5NXww&ixlib=rb-4.1.0&q=85",
+        "usage": "Testimonial or Job Seeker dashboard welcome card."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NDh8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjB3b3JraW5nJTIwbGFwdG9wfGVufDB8fHx8MTc3OTExNDE5NXww&ixlib=rb-4.1.0&q=85",
+        "usage": "For Job Seekers marketing section imagery."
+      }
+    ],
+    "company_logos": [
+      "https://images.unsplash.com/photo-1618242579640-44870fefec88?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHwxfHxzdGFydHVwJTIwY29tcGFueSUyMGxvZ28lMjBtaW5pbWFsfGVufDB8fHx8MTc3OTExNDE5NHww&ixlib=rb-4.1.0&q=85",
+      "https://images.unsplash.com/photo-1662018111846-98d85331231e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHwzfHxzdGFydHVwJTIwY29tcGFueSUyMGxvZ28lMjBtaW5pbWFsfGVufDB8fHx8MTc3OTExNDE5NHww&ixlib=rb-4.1.0&q=85"
+    ]
+  },
+  "component_strategy": {
+    "navigation": {
+      "behavior": "Sticky Nav. Backdrop blur heavy (backdrop-blur-xl). bg-white/70 or bg-[#0A192F]/80 depending on active theme section.",
+      "items": "Home, For Job Seekers, For Employers, Services, About, Login/Register",
+      "style": "Crystal Glass style. 1px delicate inner stroke (border-white/20 or border-slate-200/50)."
+    },
+    "hero_section": {
+      "headline": "Navigate Your Next Opportunity",
+      "structure": "Dual CTAs (Primary Accent #FF5959, Secondary Solid White or Transparent with Border). Prominent Job Search Bar overlapping the hero bottom edge.",
+      "search_bar": "Must include Smart Filters (job type, experience, remote/on-site, salary range) with removable chips. Highly elevated with ambient shadow."
+    },
+    "job_seeker_dashboard": {
+      "layout": "Side-navigation (collapsible) + Main View.",
+      "widgets": "Recommended Jobs, Saved Jobs, Applied Jobs, Job Alerts.",
+      "profile_builder": "Progress bar indicator, resume upload dropzone. Clean Shadcn form logic styled sharp.",
+      "job_cards": "Flat design, 1px border. Side panel (Sheet/Drawer from Shadcn) overlay for deep job details."
+    },
+    "employer_dashboard": {
+      "layout": "Control Room Grid (Mode B). Real-time feel.",
+      "kanban_pipeline": "New, Shortlisted, Interview, Offered, Hired. Must use horizontal scroll. Kanban columns should have distinct background tint.",
+      "candidate_search": "Table view with AI/Score matching columns, clear messaging/contact action buttons."
+    },
+    "interactive_elements": {
+      "buttons": "Square or very slightly rounded (max rounded-md). Hover state MUST NOT rely on opacity alone; shift hue or background color.",
+      "inputs": "Shadcn defaults stripped of generic 'Vercel' look. Use focus:ring-2 focus:ring-[#00B4D8] focus:border-transparent."
+    }
+  },
+  "motion_and_interaction": {
+    "scrolling": "Lenis library MUST be implemented for momentum smooth scrolling on marketing pages.",
+    "hover_states": "Cards should have subtle translate-y-1 and enhanced shadow. Text colors inside CTAs must explicitly remain accessible on hover.",
+    "page_transitions": "Framer motion for stagger children (opacity and slight y-axis slide) when grids mount."
+  },
+  "accessibility_and_testing": {
+    "contrast": "Ensure all text meets APCA/WCAG AA contrast ratios, especially white text on the cyan gradient.",
+    "testing_ids": "CRITICAL: All interactive and key informational elements MUST include a 'data-testid' attribute (kebab-case, role-based). Example: data-testid='job-search-submit-button', data-testid='apply-job-button', data-testid='kanban-column-interview'."
+  },
+  "library_recommendations": {
+    "icons": "lucide-react or @phosphor-icons/react (Duotone style for premium feel).",
+    "animations": "framer-motion, lenis (smooth scroll).",
+    "ui_primitives": "shadcn/ui (radix-ui) for all complex interactions (Sheet, Dialog, Tabs, Select)."
+  }
+}
