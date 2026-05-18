@@ -244,6 +244,57 @@ export default function Home() {
         </div>
       </section>
 
+      {/* INDIA SPOTLIGHT */}
+      <section className="bg-white" data-testid="india-spotlight">
+        <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-6">
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF5959]">Now Hiring · India</div>
+              <h2 className="font-display mt-3 text-4xl font-extrabold tracking-tight text-[#0B1528] lg:text-5xl">
+                Built for India's<br />tech and talent ocean.
+              </h2>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-600">
+                From Bengaluru's startup belt to Mumbai's financial harbours, Jobsboats surfaces roles from 800+
+                Indian employers — Bengaluru, Mumbai, Delhi NCR, Hyderabad, Pune, Chennai and more.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {["Bengaluru", "Mumbai", "Delhi NCR", "Hyderabad", "Pune", "Chennai", "Kolkata", "Ahmedabad", "Remote · India"].map((c) => (
+                  <Link
+                    key={c}
+                    to={`/jobs?location=${encodeURIComponent(c)}`}
+                    data-testid={`india-city-${c.toLowerCase().replace(/\s+/g, "-").replace("·", "")}`}
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-[#0B1528] hover:border-[#00B4D8] hover:text-[#0077B6]"
+                  >
+                    {c}
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-8 grid grid-cols-3 gap-4">
+                <MiniStat n="₹18L" l="Avg. senior CTC" />
+                <MiniStat n="42%" l="Remote-friendly" />
+                <MiniStat n="800+" l="Indian employers" />
+              </div>
+            </div>
+            <div className="lg:col-span-6">
+              <div className="relative overflow-hidden rounded-md border border-slate-200">
+                <img
+                  src="https://images.pexels.com/photos/3760613/pexels-photo-3760613.jpeg?auto=compress&cs=tinysrgb&w=1400&q=80"
+                  alt="Indian professional working"
+                  className="h-[440px] w-full object-cover"
+                />
+                <div className="absolute bottom-4 left-4 right-4 rounded-md border border-white/20 bg-[#0B1528]/85 p-4 backdrop-blur">
+                  <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#00B4D8]">Spotlight</div>
+                  <div className="font-display mt-1 text-lg font-extrabold text-white">
+                    "I docked a remote senior role at a Berlin company — from Pune."
+                  </div>
+                  <div className="mt-1 text-xs text-slate-300">Aarav Sharma · Engineering Manager</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="bg-[#F8FAFC]">
         <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">
@@ -285,6 +336,15 @@ function Stat({ n, l }) {
     <div>
       <div className="font-display text-2xl font-black text-white sm:text-3xl">{n}</div>
       <div className="mt-1 text-xs uppercase tracking-wider text-slate-400">{l}</div>
+    </div>
+  );
+}
+
+function MiniStat({ n, l }) {
+  return (
+    <div className="rounded-md border border-slate-200 bg-[#F8FAFC] p-4">
+      <div className="font-display text-xl font-extrabold text-[#0B1528]">{n}</div>
+      <div className="mt-1 text-[11px] uppercase tracking-wider text-slate-500">{l}</div>
     </div>
   );
 }

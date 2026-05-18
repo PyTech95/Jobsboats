@@ -3,7 +3,7 @@ import { Bell, Bookmark, FileText, Shield, Compass, Star, Briefcase, Check } fro
 import PageShell from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
 
-const IMG = "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NDh8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjB3b3JraW5nJTIwbGFwdG9wfGVufDB8fHx8MTc3OTExNDE5NXww&ixlib=rb-4.1.0&q=85";
+const IMG = "https://images.pexels.com/photos/3760613/pexels-photo-3760613.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80";
 
 const FEATURES = [
   {

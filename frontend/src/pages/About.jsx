@@ -1,7 +1,7 @@
 import PageShell from "@/components/PageShell";
 import { Anchor, Compass, Heart, Globe2 } from "lucide-react";
 
-const IMG = "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NDh8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b3JraW5nJTIwbGFwdG9wfGVufDB8fHx8MTc3OTExNDE5NXww&ixlib=rb-4.1.0&q=85";
+const IMG = "https://images.pexels.com/photos/3727464/pexels-photo-3727464.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80";
 
 export default function About() {
   return (
