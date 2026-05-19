@@ -13,4 +13,3 @@ pydantic-core==2.23.2
 pydantic-settings==2.5.2
 python-dateutil==2.9.0
 typing-extensions==4.12.2
-bson==0.5.10
