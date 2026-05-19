@@ -137,3 +137,76 @@ body {
 .rise-delay-3 {
   animation-delay: 240ms;
 }
+
+/* Floating motion */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  50% { transform: translateY(-14px) rotate(var(--r, 0deg)); }
+}
+.float-slow {
+  animation: float-y 6s ease-in-out infinite;
+}
+.float-med {
+  animation: float-y 4.5s ease-in-out infinite;
+}
+.float-fast {
+  animation: float-y 3.2s ease-in-out infinite;
+}
+
+/* Glow pulse */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.45); }
+  50% { box-shadow: 0 0 0 14px rgba(0, 180, 216, 0); }
+}
+.glow-pulse {
+  animation: glow-pulse 2.4s ease-out infinite;
+}
+
+/* Slow spin */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin-slow {
+  animation: spin-slow 28s linear infinite;
+}
+
+/* Ken Burns gentle zoom on hero image */
+@keyframes ken-burns {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.06) translate(-1.5%, -1%); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+.ken-burns {
+  animation: ken-burns 18s ease-in-out infinite;
+}
+
+/* Shimmer for the CTA button */
+@keyframes shimmer {
+  0% { background-position: -180% 0; }
+  100% { background-position: 180% 0; }
+}
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+  pointer-events: none;
+}
+
+/* Reveal text word by word */
+@keyframes word-rise {
+  from { opacity: 0; transform: translateY(0.6em); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.word-reveal > span {
+  display: inline-block;
+  opacity: 0;
+  animation: word-rise 700ms ease-out forwards;
+}

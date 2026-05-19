@@ -12,9 +12,11 @@ from typing import List, Optional, Literal
 
 import bcrypt
 import jwt
-from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends, status
+from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends, status, UploadFile, File, Form
+from fastapi.responses import StreamingResponse
 from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorGridFSBucket
+from bson import ObjectId
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
 
 
@@ -29,6 +31,7 @@ logger = logging.getLogger("jobsboats")
 mongo_url = os.environ["MONGO_URL"]
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ["DB_NAME"]]
+gridfs_bucket = AsyncIOMotorGridFSBucket(db, bucket_name="resumes")
 
 # ----- App -----
 app = FastAPI(title="Jobsboats API")
@@ -445,6 +448,105 @@ async def create_alert(payload: AlertIn, user=Depends(get_current_user)):
 async def delete_alert(alert_id: str, user=Depends(get_current_user)):
     await db.alerts.delete_one({"id": alert_id, "seeker_id": user["id"]})
     return {"ok": True}
+
+
+# =============================================================
+# Quick Apply (universal apply with resume upload via GridFS)
+# =============================================================
+MAX_RESUME_BYTES = 10 * 1024 * 1024  # 10MB
+ALLOWED_RESUME_TYPES = {
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "text/plain",
+}
+
+
+@api.post("/quick-apply")
+async def quick_apply(
+    name: str = Form(...),
+    email: str = Form(...),
+    phone: Optional[str] = Form(None),
+    current_role: Optional[str] = Form(None),
+    experience_years: Optional[int] = Form(None),
+    preferred_title: Optional[str] = Form(None),
+    preferred_location: Optional[str] = Form(None),
+    cover_note: Optional[str] = Form(None),
+    job_id: Optional[str] = Form(None),
+    resume: Optional[UploadFile] = File(None),
+):
+    file_id: Optional[str] = None
+    resume_filename: Optional[str] = None
+    resume_content_type: Optional[str] = None
+
+    if resume is not None and resume.filename:
+        contents = await resume.read()
+        if not contents:
+            raise HTTPException(status_code=400, detail="Resume file is empty")
+        if len(contents) > MAX_RESUME_BYTES:
+            raise HTTPException(status_code=400, detail="Resume must be 10MB or smaller")
+        if resume.content_type and resume.content_type not in ALLOWED_RESUME_TYPES:
+            # don't hard-fail unknown types, but warn-log; many browsers send octet-stream
+            logger.info("Unexpected resume content_type=%s", resume.content_type)
+        upload_id = await gridfs_bucket.upload_from_stream(
+            resume.filename,
+            contents,
+            metadata={
+                "content_type": resume.content_type,
+                "uploaded_at": now_iso(),
+                "applicant_email": email.lower().strip(),
+            },
+        )
+        file_id = str(upload_id)
+        resume_filename = resume.filename
+        resume_content_type = resume.content_type
+
+    doc = {
+        "id": str(uuid.uuid4()),
+        "name": name.strip(),
+        "email": email.lower().strip(),
+        "phone": phone,
+        "current_role": current_role,
+        "experience_years": experience_years,
+        "preferred_title": preferred_title,
+        "preferred_location": preferred_location,
+        "cover_note": cover_note,
+        "job_id": job_id,
+        "resume_file_id": file_id,
+        "resume_filename": resume_filename,
+        "resume_content_type": resume_content_type,
+        "submitted_at": now_iso(),
+    }
+    await db.quick_applications.insert_one(doc)
+    doc.pop("_id", None)
+    return {"ok": True, "application": doc}
+
+
+@api.get("/quick-apply/resume/{file_id}")
+async def download_resume(file_id: str):
+    try:
+        oid = ObjectId(file_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid file id")
+    try:
+        stream = await gridfs_bucket.open_download_stream(oid)
+    except Exception:
+        raise HTTPException(status_code=404, detail="Resume not found")
+
+    async def iterator():
+        while True:
+            chunk = await stream.readchunk()
+            if not chunk:
+                break
+            yield chunk
+
+    filename = stream.filename or "resume"
+    media = (stream.metadata or {}).get("content_type") or "application/octet-stream"
+    return StreamingResponse(
+        iterator(),
+        media_type=media,
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
 
 
 # =============================================================

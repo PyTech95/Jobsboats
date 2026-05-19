@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Menu, X, ChevronDown, LogOut, LayoutDashboard, User } from "lucide-react";
+import { Menu, X, ChevronDown, LogOut, LayoutDashboard, User, Zap } from "lucide-react";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
+import { useQuickApply } from "@/context/QuickApplyContext";
 
 const NAV = [
   { to: "/jobs", label: "Find Jobs" },
@@ -23,6 +24,7 @@ const NAV = [
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const { openApply } = useQuickApply() || {};
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -67,6 +69,15 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
+          <button
+            onClick={() => openApply?.()}
+            data-testid="navbar-apply-button"
+            className="group relative inline-flex items-center gap-2 rounded-md bg-[#FF5959] px-4 py-2 text-sm font-bold text-white shadow-[0_8px_24px_rgba(255,89,89,0.35)] transition hover:bg-[#ff4040]"
+          >
+            <span className="absolute inset-0 -z-10 rounded-md bg-[#FF5959] opacity-60 blur-md transition group-hover:opacity-80" />
+            <Zap className="h-4 w-4" />
+            Quick Apply
+          </button>
           {user && user !== false ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -123,14 +134,23 @@ export default function Navbar() {
           )}
         </div>
 
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="rounded-md p-2 text-[#0B1528] lg:hidden"
-          data-testid="mobile-menu-toggle"
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <button
+            onClick={() => openApply?.()}
+            data-testid="mobile-apply-button"
+            className="inline-flex items-center gap-1 rounded-md bg-[#FF5959] px-3 py-1.5 text-xs font-bold text-white shadow-[0_4px_14px_rgba(255,89,89,0.35)]"
+          >
+            <Zap className="h-3.5 w-3.5" /> Apply
+          </button>
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="rounded-md p-2 text-[#0B1528]"
+            data-testid="mobile-menu-toggle"
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {open && (

@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Compass, Sparkles, Rocket, Check, Star, Quote, BadgeCheck, Anchor, ShieldCheck } from "lucide-react";
+import { ArrowRight, Compass, Sparkles, Rocket, Check, Star, Quote, BadgeCheck, Anchor, ShieldCheck, Zap, Briefcase, MapPin } from "lucide-react";
 import PageShell from "@/components/PageShell";
 import HeroSearch from "@/components/HeroSearch";
 import { Button } from "@/components/ui/button";
+import { useQuickApply } from "@/context/QuickApplyContext";
 
 const HERO_BG = "https://static.prod-images.emergentagent.com/jobs/747c2510-38b2-444a-8916-6fc89b153445/images/2832d4a52e73501819e6429aebba6a5912efaffe65c607a20a9b15e204756525.png";
 
@@ -60,6 +61,7 @@ const TESTIMONIALS = [
 ];
 
 export default function Home() {
+  const { openApply } = useQuickApply();
   return (
     <PageShell>
       {/* HERO */}
@@ -68,41 +70,59 @@ export default function Home() {
           src={HERO_BG}
           alt=""
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-50"
+          className="absolute inset-0 h-full w-full object-cover opacity-50 ken-burns"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-[#0B1528] via-[#0B1528]/85 to-[#0077B6]/60" />
         <div className="absolute inset-0 hero-grid opacity-40" />
         <div className="absolute inset-0 cyan-flare" />
 
         <div className="relative mx-auto max-w-7xl px-5 pb-28 pt-24 sm:pt-28 lg:px-8 lg:pb-36 lg:pt-32">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-[#90E0EF] backdrop-blur rise">
-            <Anchor className="h-3.5 w-3.5" /> The career navigation platform
-          </div>
-          <h1
-            data-testid="hero-headline"
-            className="font-display mt-6 max-w-4xl text-5xl font-black leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl rise rise-delay-1"
-          >
-            Navigate Your <span className="text-gradient-ocean">Next Opportunity</span>
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-200 sm:text-xl rise rise-delay-2">
-            Jobsboats aggregates roles from boards and company sites, plus premium services — verification, profile
-            highlight, and international career support — so you land the right opportunity, faster.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3 rise rise-delay-3">
-            <Link to="/jobs" data-testid="hero-primary-cta">
-              <Button size="lg" className="bg-[#FF5959] px-6 py-6 text-base font-bold text-white hover:bg-[#ff4040]">
-                Start Job Search <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link to="/for-employers" data-testid="hero-secondary-cta">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white/30 bg-white/10 px-6 py-6 text-base font-bold text-white backdrop-blur hover:bg-white hover:text-[#0B1528]"
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-[#90E0EF] backdrop-blur rise">
+                <Anchor className="h-3.5 w-3.5" /> The career navigation platform
+              </div>
+              <h1
+                data-testid="hero-headline"
+                className="font-display mt-6 max-w-4xl text-5xl font-black leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl rise rise-delay-1"
               >
-                For Employers — Post a Job
-              </Button>
-            </Link>
+                Navigate Your <span className="text-gradient-ocean">Next Opportunity</span>
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-200 sm:text-xl rise rise-delay-2">
+                Jobsboats aggregates roles from boards and company sites, plus premium services — verification, profile
+                highlight, and international career support — so you land the right opportunity, faster.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-3 rise rise-delay-3">
+                <button
+                  type="button"
+                  onClick={() => openApply()}
+                  data-testid="hero-quick-apply-cta"
+                  className="btn-shimmer inline-flex items-center gap-2 rounded-md bg-[#FF5959] px-6 py-3.5 text-base font-bold text-white shadow-[0_18px_40px_rgba(255,89,89,0.35)] transition hover:bg-[#ff4040]"
+                >
+                  <Zap className="h-4 w-4" /> Quick Apply now
+                </button>
+                <Link to="/jobs" data-testid="hero-primary-cta">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-white/30 bg-white/10 px-6 py-6 text-base font-bold text-white backdrop-blur hover:bg-white hover:text-[#0B1528]"
+                  >
+                    Start Job Search <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="mt-6 flex items-center gap-2 text-xs text-slate-300 rise rise-delay-3">
+                <span className="grid h-6 w-6 place-items-center rounded-full bg-[#00B4D8]/20 text-[#00B4D8]">
+                  <CheckIcon />
+                </span>
+                Upload a resume in 60 seconds — no login needed.
+              </div>
+            </div>
+
+            {/* HERO VISUAL */}
+            <div className="relative hidden lg:col-span-5 lg:block">
+              <HeroVisual />
+            </div>
           </div>
 
           {/* Search overlap */}
@@ -345,6 +365,130 @@ function MiniStat({ n, l }) {
     <div className="rounded-md border border-slate-200 bg-[#F8FAFC] p-4">
       <div className="font-display text-xl font-extrabold text-[#0B1528]">{n}</div>
       <div className="mt-1 text-[11px] uppercase tracking-wider text-slate-500">{l}</div>
+    </div>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="3">
+      <path d="M5 12l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function HeroVisual() {
+  return (
+    <div className="relative h-[520px] w-full">
+      {/* Halo */}
+      <div className="absolute right-0 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-[#00B4D8]/30 blur-3xl" />
+      <div className="absolute left-6 top-12 h-40 w-40 rounded-full bg-[#FF5959]/20 blur-3xl" />
+
+      {/* Rotating compass ring */}
+      <svg
+        viewBox="0 0 200 200"
+        className="absolute right-0 top-1/2 h-[420px] w-[420px] -translate-y-1/2 spin-slow text-[#00B4D8]/35"
+        aria-hidden
+      >
+        <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 4" />
+        <circle cx="100" cy="100" r="64" fill="none" stroke="currentColor" strokeWidth="0.3" strokeDasharray="1 3" />
+        <g stroke="currentColor" strokeWidth="0.8">
+          <line x1="100" y1="14" x2="100" y2="26" />
+          <line x1="100" y1="174" x2="100" y2="186" />
+          <line x1="14" y1="100" x2="26" y2="100" />
+          <line x1="174" y1="100" x2="186" y2="100" />
+        </g>
+        <text x="100" y="10" textAnchor="middle" fontSize="6" fill="currentColor">N</text>
+        <text x="100" y="196" textAnchor="middle" fontSize="6" fill="currentColor">S</text>
+        <text x="6" y="103" textAnchor="middle" fontSize="6" fill="currentColor">W</text>
+        <text x="194" y="103" textAnchor="middle" fontSize="6" fill="currentColor">E</text>
+      </svg>
+
+      {/* Main applicant card */}
+      <div
+        className="absolute right-6 top-10 w-72 rounded-md border border-white/15 bg-white/10 p-4 backdrop-blur-xl float-slow"
+        style={{ "--r": "-2deg" }}
+      >
+        <div className="flex items-center gap-3">
+          <img
+            src="https://images.pexels.com/photos/3727464/pexels-photo-3727464.jpeg?auto=compress&cs=tinysrgb&w=200"
+            alt=""
+            className="h-12 w-12 rounded-full object-cover ring-2 ring-[#00B4D8]"
+          />
+          <div className="min-w-0">
+            <div className="font-display text-sm font-bold text-white">Priya Menon</div>
+            <div className="truncate text-[11px] text-slate-300">Backend Engineer · Bengaluru</div>
+          </div>
+          <span className="ml-auto rounded-full bg-emerald-400/20 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
+            Verified
+          </span>
+        </div>
+        <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+          {[
+            { l: "Applied", v: "12" },
+            { l: "Shortlisted", v: "4" },
+            { l: "Offers", v: "2" },
+          ].map((s) => (
+            <div key={s.l} className="rounded-md border border-white/10 bg-white/5 py-2">
+              <div className="font-display text-base font-extrabold text-white">{s.v}</div>
+              <div className="text-[9px] uppercase tracking-wider text-slate-400">{s.l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Floating job pill 1 */}
+      <div
+        className="absolute left-2 top-44 w-60 rounded-md border border-white/15 bg-white/10 p-3 backdrop-blur-xl float-med"
+        style={{ "--r": "1.5deg" }}
+      >
+        <div className="flex items-center gap-2">
+          <div className="grid h-9 w-9 place-items-center rounded-md bg-gradient-to-br from-[#0B1528] to-[#0077B6] font-display text-sm font-black text-white">
+            H
+          </div>
+          <div className="min-w-0">
+            <div className="font-display text-sm font-bold text-white">Senior Frontend Eng.</div>
+            <div className="flex items-center gap-1 text-[11px] text-slate-300">
+              <MapPin className="h-3 w-3" /> Remote · USA
+            </div>
+          </div>
+        </div>
+        <div className="mt-2 flex items-center justify-between text-[11px]">
+          <span className="rounded-full bg-[#00B4D8]/20 px-2 py-0.5 font-semibold text-[#90E0EF]">$140–180k</span>
+          <span className="text-slate-400">2h ago</span>
+        </div>
+      </div>
+
+      {/* Floating job pill 2 */}
+      <div
+        className="absolute right-14 bottom-12 w-56 rounded-md border border-white/15 bg-white/10 p-3 backdrop-blur-xl float-fast"
+        style={{ "--r": "-2deg" }}
+      >
+        <div className="flex items-center gap-2">
+          <div className="grid h-9 w-9 place-items-center rounded-md bg-[#FF5959] font-display text-sm font-black text-white">
+            L
+          </div>
+          <div className="min-w-0">
+            <div className="font-display text-sm font-bold text-white">Product Designer</div>
+            <div className="flex items-center gap-1 text-[11px] text-slate-300">
+              <MapPin className="h-3 w-3" /> Lisbon · Hybrid
+            </div>
+          </div>
+        </div>
+        <div className="mt-2 text-[10px] text-slate-300">
+          <span className="rounded-full bg-emerald-400/20 px-2 py-0.5 font-semibold text-emerald-300">
+            New match
+          </span>
+        </div>
+      </div>
+
+      {/* Floating chip */}
+      <div className="absolute left-10 bottom-2 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-[#90E0EF] backdrop-blur float-med">
+        <span className="grid h-5 w-5 place-items-center rounded-full bg-[#00B4D8]/30 glow-pulse">
+          <Briefcase className="h-3 w-3" />
+        </span>
+        12 new today
+      </div>
     </div>
   );
 }
