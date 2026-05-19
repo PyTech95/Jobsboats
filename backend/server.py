@@ -7,45 +7,74 @@ load_dotenv(ROOT_DIR / ".env")
 import os
 import uuid
 import logging
+
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional, Literal
 
 import bcrypt
 import jwt
-from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends, status, UploadFile, File, Form
+
+from fastapi import (
+    FastAPI,
+    APIRouter,
+    HTTPException,
+    Request,
+    Response,
+    Depends,
+    status,
+    UploadFile,
+    File,
+    Form,
+)
+
 from fastapi.responses import StreamingResponse
 from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorGridFSBucket
-from bson import ObjectId
-from pydantic import BaseModel, Field, EmailStr, ConfigDict
 
+from motor.motor_asyncio import (
+    AsyncIOMotorClient,
+    AsyncIOMotorGridFSBucket,
+)
+
+from bson import ObjectId
+
+from pydantic import (
+    BaseModel,
+    Field,
+    EmailStr,
+    ConfigDict,
+)
 
 # ----- Logging -----
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
+
 logger = logging.getLogger("jobsboats")
 
 # ----- DB -----
 mongo_url = os.environ["MONGO_URL"]
-try:
-    asyncio.get_running_loop()
-except RuntimeError:
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
 
 client = AsyncIOMotorClient(mongo_url)
+
 db = client[os.environ["DB_NAME"]]
-gridfs_bucket = AsyncIOMotorGridFSBucket(db, bucket_name="resumes")
+
+gridfs_bucket = AsyncIOMotorGridFSBucket(
+    db,
+    bucket_name="resumes"
+)
 
 # ----- App -----
 app = FastAPI(title="Jobsboats API")
+
 api = APIRouter(prefix="/api")
 
 JWT_ALGO = "HS256"
-JWT_SECRET = os.environ.get("JWT_SECRET", "dev-secret-change-me")
 
+JWT_SECRET = os.environ.get(
+    "JWT_SECRET",
+    "dev-secret-change-me"
+)
 
 # =============================================================
 # Helpers
