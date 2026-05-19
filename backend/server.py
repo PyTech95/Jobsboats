@@ -29,6 +29,12 @@ logger = logging.getLogger("jobsboats")
 
 # ----- DB -----
 mongo_url = os.environ["MONGO_URL"]
+try:
+    asyncio.get_running_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ["DB_NAME"]]
 gridfs_bucket = AsyncIOMotorGridFSBucket(db, bucket_name="resumes")
